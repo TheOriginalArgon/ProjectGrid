@@ -11,9 +11,6 @@ namespace ProjectGrid
     /// </summary>
     public static class Engine
     {
-
-        public static List<Cell> cells = new List<Cell>();
-
         public static void Initialize()
         {
             Console.WriteLine("Please enter the grid's width: ");
@@ -30,7 +27,7 @@ namespace ProjectGrid
             string gridName = Console.ReadLine();
 
             Grid newGrid = new Grid(width, height, gridName);
-            DrawGrid(newGrid);
+            DrawGrid(newGrid, true);
         }
 
         /// <summary>
@@ -38,21 +35,15 @@ namespace ProjectGrid
         /// </summary>
         /// <param name="width">Determines the width of the grid.</param>
         /// <param name="height">Determines the height of the grid.</param>
-        public static void DrawGrid(Grid grid)
+        public static void DrawGrid(Grid grid, bool showDebugInformation = false)
         {
-            //Cell baseCell = new Cell(2, '0');
+            grid.DrawCells(grid.GetAllCells());
+            Console.WriteLine();
 
-            //for (int j = 0; j < height; j++)
-            //{
-            //    for (int i = 0; i < width; i++)
-            //    {
-            //        baseCell.Draw();
-            //    }
-            //    Console.WriteLine();
-            //}
-
-            grid.Draw();
-
+            if (showDebugInformation)
+            {
+                Console.WriteLine($"Successfully drawn grid {grid.Name} with dimensions {grid.Width} x {grid.Height} and a total cell count of {grid.Cells}.");
+            }
         }
     }
 }

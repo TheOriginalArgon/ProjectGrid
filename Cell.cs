@@ -12,8 +12,36 @@ namespace ProjectGrid
     /// </summary>
     public class Cell
     {
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public Grid Grid { get; }
+
+        public Cell(Grid myGrid)
+        {
+            Grid = myGrid;
+        }
+
+        public void Initialize(int positionIndex)
+        {
+            if (positionIndex < Grid.Width)
+            {
+                Y = 0;
+                X = positionIndex;
+            }
+            if (positionIndex >= Grid.Width)
+            {
+                Y = Convert.ToInt32(Math.Floor(positionIndex / (decimal)Grid.Width));
+                X = positionIndex - (Grid.Width * Y);
+            }
+        }
+
         public void Draw()
         {
+            if (X == 0 && Y != 0)
+            {
+                Console.WriteLine();
+            }
             Console.Write("[]");
         }
     }
