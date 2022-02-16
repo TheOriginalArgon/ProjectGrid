@@ -12,18 +12,46 @@ namespace ProjectGrid
     /// </summary>
     public class Cell
     {
+        /// <summary>
+        /// The char calue shown by the cell.
+        /// </summary>
+        public char Value { get; private set; } = ' ';
+
+        /// <summary>
+        /// An integer value representing the x-axis position of this cell within the grid.
+        /// </summary>
         public int X { get; set; }
+
+        /// <summary>
+        /// An integer value representing the y-axis position of this cell within the grid.
+        /// </summary>
         public int Y { get; set; }
 
+        /// <summary>
+        /// An integer value holding this cell's unique position index within the grid.
+        /// </summary>
+        public int PositionIndex { get; private set; }
+
+        /// <summary>
+        /// The grid this cell belongs to.
+        /// </summary>
         public Grid Grid { get; }
 
-        public Cell(Grid myGrid)
+        /// <summary>
+        /// Creates a new empty cell.
+        /// </summary>
+        /// <param name="myGrid">Assigns this cell to a given grid.</param>
+        /// <param name="positionIndex">The unique position idex value. This value is used to determine the <see cref="X"/> and <see cref="Y"/> position of this cell upon creation and assignation to a grid.</param>
+        public Cell(Grid myGrid, int positionIndex)
         {
+            // Assign this cell to a grid.
             Grid = myGrid;
-        }
 
-        public void Initialize(int positionIndex)
-        {
+            // Assign the position index and the default char value.
+            PositionIndex = positionIndex;
+            Value = '0';
+
+            // Assign X and Y position based on the position idex.
             if (positionIndex < Grid.Width)
             {
                 Y = 0;
@@ -36,13 +64,16 @@ namespace ProjectGrid
             }
         }
 
+        /// <summary>
+        /// Draws this cell as part of a <see cref="ProjectGrid.Grid"/>.
+        /// </summary>
         public void Draw()
         {
             if (X == 0 && Y != 0)
             {
                 Console.WriteLine();
             }
-            Console.Write("[]");
+            Console.Write($"[{Value}]");
         }
     }
 }
