@@ -67,16 +67,37 @@ namespace ProjectGrid
             if (prompt.StartsWith("/"))
             {
                 string instruction = prompt.Substring(1);
-                switch (instruction)
+
+                foreach (Instruction inst in InstructionManager.instructions)
                 {
-                    default:
-                        SendMessage($"\"{instruction}\" is not a valid instruction, type \"/help\" for a list of instructions.");
-                        break;
+                    if (instruction == inst.ID)
+                    {
+                        inst.Action.Invoke();
+                        return;
+                    }
                 }
+                SendMessage($"\"{instruction}\" is not a valid instruction, type \"/help\" for a list of instructions.");
             }
             else
             {
                 Program.terminate = true;
+            }
+        }
+
+        private static class InstructionManager
+        {
+            public static List<Instruction> instructions = new List<Instruction>();
+
+            static InstructionManager()
+            {
+                instructions.Add(new Instruction(
+                    "Test Instruction",
+                    "This is the description of this instruction",
+                    delegate
+                    {
+                        SendMessage($"This is the output of this instruction");
+                    },
+                    "testinstruction"));
             }
         }
 
