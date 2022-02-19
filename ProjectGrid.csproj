@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cell.cs" />
+    <Compile Include="Engine_InstructionManager.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Instruction.cs" />

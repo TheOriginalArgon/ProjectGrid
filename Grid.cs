@@ -44,7 +44,18 @@ namespace ProjectGrid
         /// <returns>The <see cref="Cell"/> indexed with the value of <paramref name="index"/></returns>
         public Cell GetCell(int index)
         {
-            return cells[index];
+            try
+            {
+                return cells[index];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return cells[cells.Length - 1];
+            }
+        }
+        public Cell[] GetAllCells()
+        {
+            return cells;
         }
 
         /// <summary>

@@ -9,37 +9,16 @@ namespace ProjectGrid
     /// <summary>
     /// The engine class controls the actions of the program.
     /// </summary>
-    public static class Engine
+    public static partial class Engine
     {
         static readonly string separator_single = "-----------------------------------------------------------------";
+        static readonly string separator_single_short = "------------------------";
         /// <summary>
         /// Initializes the engine.
         /// </summary>
         public static void Initialize()
         {
-            // CREATING A NEW GRID
-            // Grid size.
-            Console.WriteLine("Please enter the grid's width: ");
 
-            string widthString = Console.ReadLine();
-            int width = Convert.ToInt32(widthString);
-
-            Console.WriteLine("Please enter the grid's height: ");
-
-            string heightString = Console.ReadLine();
-            int height = Convert.ToInt32(heightString);
-
-            // Grid name.
-            Console.WriteLine("Please enter a name for your grid: ");
-            string gridName = Console.ReadLine();
-
-            // Here we create the grid itself as an object and load it.
-            Grid newGrid = new Grid(width, height, gridName);
-            Program.loadedGrid = newGrid;
-
-            // Draw the grid.
-            Console.Clear();
-            Program.loadedGrid.Draw(true);
         }
 
         /// <summary>
@@ -49,7 +28,6 @@ namespace ProjectGrid
         /// <param name="debug">Determines if the message has debugging purposes or not. This will only hide/show the "DEBUG" word at the beginning of the string.</param>
         public static void SendMessage(string message, bool debug = false)
         {
-            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine(separator_single);
             if (debug)
@@ -61,9 +39,13 @@ namespace ProjectGrid
                 Console.WriteLine(message);
             }
         }
-
+        /// <summary>
+        /// Executes an isnstruction based on user input.
+        /// </summary>
+        /// <param name="prompt">The user input represented as a string.</param>
         public static void ExecuteInstruction(string prompt)
         {
+            // If the input starts with a slash take it as an instruction.
             if (prompt.StartsWith("/"))
             {
                 string instruction = prompt.Substring(1);
@@ -72,7 +54,15 @@ namespace ProjectGrid
                 {
                     if (instruction == inst.ID)
                     {
-                        inst.Action.Invoke();
+                        if (inst.ArgCount > 0)
+                        {
+                            for (int i = 0; i < inst.ArgCount; i++)
+                            {
+                                Console.WriteLine($"Define argument {inst.ArgDefinitions[i]}: ");
+                                inst.Args[i] = Console.ReadLine();
+                            }
+                        }
+                        inst.Action.Invoke(inst.Args);
                         return;
                     }
                 }
@@ -83,23 +73,5 @@ namespace ProjectGrid
                 Program.terminate = true;
             }
         }
-
-        private static class InstructionManager
-        {
-            public static List<Instruction> instructions = new List<Instruction>();
-
-            static InstructionManager()
-            {
-                instructions.Add(new Instruction(
-                    "Test Instruction",
-                    "This is the description of this instruction",
-                    delegate
-                    {
-                        SendMessage($"This is the output of this instruction");
-                    },
-                    "testinstruction"));
-            }
-        }
-
     }
 }

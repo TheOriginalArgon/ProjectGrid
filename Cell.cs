@@ -37,6 +37,11 @@ namespace ProjectGrid
         /// </summary>
         public Grid Grid { get; }
 
+        public void SetValue(char value)
+        {
+            Value = value;
+        }
+
         /// <summary>
         /// Creates a new empty cell.
         /// </summary>
@@ -49,7 +54,6 @@ namespace ProjectGrid
 
             // Assign the position index and the default char value.
             PositionIndex = positionIndex;
-            Value = '0';
 
             // Assign X and Y position based on the position idex.
             if (positionIndex < Grid.Width)

@@ -13,11 +13,10 @@ namespace ProjectGrid
         static void Main(string[] args)
         {
             // Starting texts to let the user know what they will be doing.
-            Console.WriteLine("Welcome to the grid project.");
+            Console.WriteLine("Welcome to the grid project!");
             Console.WriteLine("Created by Argón as a way to play around with C#");
+            Console.WriteLine($"Type \"/help\" to show a list of instructions.");
             Console.WriteLine("===============================================");
-            Console.WriteLine("Let's create our grid!");
-            Engine.Initialize();
 
             // Take any following input as an instruction.
             while (!terminate)
